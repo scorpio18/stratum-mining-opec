@@ -11,8 +11,8 @@ elif settings.COINDAEMON_ALGO == 'quark':
     import quark_hash
 elif settings.COINDAEMON_ALGO == 'xcoin':
     import xcoin_hash
-elif settings.COINDAEMON_ALGO == 'x13':
-    import x13_hash
+elif settings.COINDAEMON_ALGO == 'bitblock':
+    import bitblock_hash
 elif settings.COINDAEMON_ALGO == 'skeinhash':
     import skeinhash
 else: pass
@@ -264,8 +264,8 @@ class TemplateRegistry(object):
             hash_bin = quark_hash.getPoWHash(''.join([ header_bin[i*4:i*4+4][::-1] for i in range(0, 20) ]))
         elif settings.COINDAEMON_ALGO == 'xcoin':
             hash_bin = xcoin_hash.getPoWHash(''.join([ header_bin[i*4:i*4+4][::-1] for i in range(0, 20) ]))
-        elif settings.COINDAEMON_ALGO == 'x13':
-            hash_bin = x13_hash.getPoWHash(''.join([ header_bin[i*4:i*4+4][::-1] for i in range(0, 20) ]))
+        elif settings.COINDAEMON_ALGO == 'bitblock':
+            hash_bin = bitblock_hash.getPoWHash(''.join([ header_bin[i*4:i*4+4][::-1] for i in range(0, 20) ]))
 	elif settings.COINDAEMON_ALGO == 'skeinhash':
             hash_bin = skeinhash.skeinhash(''.join([ header_bin[i*4:i*4+4][::-1] for i in range(0, 20) ]))
         else:
@@ -280,7 +280,7 @@ class TemplateRegistry(object):
             header_hex = header_hex+"000000800000000000000000000000000000000000000000000000000000000000000000000000000000000080020000"
         elif settings.COINDAEMON_ALGO == 'xcoin':
             header_hex = header_hex+"000000800000000000000000000000000000000000000000000000000000000000000000000000000000000080020000"
-        elif settings.COINDAEMON_ALGO == 'x13':
+        elif settings.COINDAEMON_ALGO == 'bitblock':
             header_hex = header_hex+"000000800000000000000000000000000000000000000000000000000000000000000000000000000000000080020000"
         else: pass
                  

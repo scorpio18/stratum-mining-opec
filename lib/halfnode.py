@@ -327,7 +327,7 @@ class CBlock(object):
                 r.append(struct.pack("<I", self.nTime))
                 r.append(struct.pack("<I", self.nBits))
                 r.append(struct.pack("<I", self.nNonce))
-                self.x13 = uint256_from_str(x13_hash.getPoWHash(''.join(r)))
+                self.bitblock = uint256_from_str(bitblock_hash.getPoWHash(''.join(r)))
              return self.bitblock
     elif settings.COINDAEMON_ALGO == 'scrypt-jane':
         def calc_scryptjane(self):

@@ -32,9 +32,9 @@ elif settings.COINDAEMON_ALGO == 'quark':
 elif settings.COINDAEMON_ALGO == 'xcoin':
     log.debug("########################################### Loading XCoin Support #########################################################")
     import xcoin_hash
-elif settings.COINDAEMON_ALGO == 'bitblock':
-    log.debug("########################################### Loading bitblock Support #########################################################")
-    import bitblock_hash
+elif settings.COINDAEMON_ALGO == 'x14-hash':
+    log.debug("########################################### Loading x14-hash Support #########################################################")
+    import x14_hash
 elif settings.COINDAEMON_ALGO == 'skeinhash':
     import skeinhash
 
@@ -247,8 +247,8 @@ class CBlock(object):
             self.quark = None
         elif settings.COINDAEMON_ALGO == 'xcoin':
             self.xcoin = None
-        elif settings.COINDAEMON_ALGO == 'bitblock':
-            self.bitblock = None
+        elif settings.COINDAEMON_ALGO == 'x14-hash':
+            self.x14 = None
         elif settings.COINDAEMON_ALGO == 'skein':
             self.skein = None
         if settings.COINDAEMON_Reward == 'POS':
@@ -317,9 +317,9 @@ class CBlock(object):
                 r.append(struct.pack("<I", self.nNonce))
                 self.xcoin = uint256_from_str(xcoin_hash.getPoWHash(''.join(r)))
              return self.xcoin
-    elif settings.COINDAEMON_ALGO == 'bitblock':
-         def calc_bitblock(self):
-             if self.bitblock is None:
+    elif settings.COINDAEMON_ALGO == 'x14-hash':
+         def calc_x14(self):
+             if self.x14 is None:
                 r = []
                 r.append(struct.pack("<i", self.nVersion))
                 r.append(ser_uint256(self.hashPrevBlock))
@@ -327,8 +327,8 @@ class CBlock(object):
                 r.append(struct.pack("<I", self.nTime))
                 r.append(struct.pack("<I", self.nBits))
                 r.append(struct.pack("<I", self.nNonce))
-                self.bitblock = uint256_from_str(bitblock_hash.getPoWHash(''.join(r)))
-             return self.bitblock
+                self.x14 = uint256_from_str(x14_hash.getPoWHash(''.join(r)))
+             return self.x14
     elif settings.COINDAEMON_ALGO == 'scrypt-jane':
         def calc_scryptjane(self):
              if self.scryptjane is None:
@@ -374,8 +374,8 @@ class CBlock(object):
             self.calc_quark()
         elif settings.COINDAEMON_ALGO == 'xcoin':
             self.calc_xcoin()
-        elif settings.COINDAEMON_ALGO == 'bitblock':
-            self.calc_bitblock()
+        elif settings.COINDAEMON_ALGO == 'x14-hash':
+            self.calc_x14()
         elif settings.COINDAEMON_ALGO == 'scrypt-jane':
             self.calc_scryptjane
         elif settings.COINDAEMON_ALGO == 'skein':
@@ -394,8 +394,8 @@ class CBlock(object):
         elif settings.COINDAEMON_ALGO == 'xcoin':
             if self.xcoin > target:
                 return False
-        elif settings.COINDAEMON_ALGO == 'bitblock':
-            if self.bitblock > target:
+        elif settings.COINDAEMON_ALGO == 'x14-hash':
+            if self.x14 > target:
                 return False
         elif settings.COINDAEMON_ALGO == 'scrypt-jane':
             if self.scryptjane > target:
